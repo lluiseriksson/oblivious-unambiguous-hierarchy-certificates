@@ -1,0 +1,67 @@
+{
+  "rows": [
+    {
+      "tally_bound_h": 4,
+      "census_cm": 2,
+      "total_subsets": 16,
+      "same_size_candidates": 6,
+      "unique_certified_subsets": 1
+    },
+    {
+      "tally_bound_h": 5,
+      "census_cm": 2,
+      "total_subsets": 32,
+      "same_size_candidates": 10,
+      "unique_certified_subsets": 1
+    },
+    {
+      "tally_bound_h": 6,
+      "census_cm": 3,
+      "total_subsets": 64,
+      "same_size_candidates": 20,
+      "unique_certified_subsets": 1
+    },
+    {
+      "tally_bound_h": 7,
+      "census_cm": 3,
+      "total_subsets": 128,
+      "same_size_candidates": 35,
+      "unique_certified_subsets": 1
+    },
+    {
+      "tally_bound_h": 8,
+      "census_cm": 4,
+      "total_subsets": 256,
+      "same_size_candidates": 70,
+      "unique_certified_subsets": 1
+    },
+    {
+      "tally_bound_h": 9,
+      "census_cm": 4,
+      "total_subsets": 512,
+      "same_size_candidates": 126,
+      "unique_certified_subsets": 1
+    },
+    {
+      "tally_bound_h": 10,
+      "census_cm": 5,
+      "total_subsets": 1024,
+      "same_size_candidates": 252,
+      "unique_certified_subsets": 1
+    },
+    {
+      "tally_bound_h": 11,
+      "census_cm": 5,
+      "total_subsets": 2048,
+      "same_size_candidates": 462,
+      "unique_certified_subsets": 1
+    },
+    {
+      "tally_bound_h": 12,
+      "census_cm": 6,
+      "total_subsets": 4096,
+      "same_size_candidates": 924,
+      "unique_certified_subsets": 1
+    }
+  ]
+}

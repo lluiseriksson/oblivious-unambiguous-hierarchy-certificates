@@ -1,0 +1,25 @@
+{
+  "schema": "OUH-CERT-1.0",
+  "mode": "tally_census_and_oblivious_extraction",
+  "name": "mode1_tally_n3_p5_empty_slice",
+  "input_len_n": 3,
+  "witness_len_p": 5,
+  "tally_bound_h": 10,
+  "tally_set_Cm": [
+    3,
+    7
+  ],
+  "claimed_census_cm": 2,
+  "acc_table": {
+    "000": [],
+    "001": [],
+    "010": [],
+    "011": [],
+    "100": [],
+    "101": [],
+    "110": [],
+    "111": []
+  },
+  "claimed_lang_size": 0,
+  "claimed_extracted_witness": "00000"
+}

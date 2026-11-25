@@ -1,0 +1,193 @@
+{
+  "rows": [
+    {
+      "depth_q": 2,
+      "regime": "sparse",
+      "total_transcripts": 4,
+      "certified_count": 2,
+      "prefix_probes": 2,
+      "tester_acc_size": 1,
+      "lex_max": "10"
+    },
+    {
+      "depth_q": 2,
+      "regime": "balanced",
+      "total_transcripts": 4,
+      "certified_count": 3,
+      "prefix_probes": 2,
+      "tester_acc_size": 1,
+      "lex_max": "11"
+    },
+    {
+      "depth_q": 2,
+      "regime": "dense",
+      "total_transcripts": 4,
+      "certified_count": 4,
+      "prefix_probes": 2,
+      "tester_acc_size": 1,
+      "lex_max": "11"
+    },
+    {
+      "depth_q": 3,
+      "regime": "sparse",
+      "total_transcripts": 8,
+      "certified_count": 2,
+      "prefix_probes": 3,
+      "tester_acc_size": 1,
+      "lex_max": "100"
+    },
+    {
+      "depth_q": 3,
+      "regime": "balanced",
+      "total_transcripts": 8,
+      "certified_count": 5,
+      "prefix_probes": 3,
+      "tester_acc_size": 1,
+      "lex_max": "111"
+    },
+    {
+      "depth_q": 3,
+      "regime": "dense",
+      "total_transcripts": 8,
+      "certified_count": 6,
+      "prefix_probes": 3,
+      "tester_acc_size": 1,
+      "lex_max": "111"
+    },
+    {
+      "depth_q": 4,
+      "regime": "sparse",
+      "total_transcripts": 16,
+      "certified_count": 3,
+      "prefix_probes": 4,
+      "tester_acc_size": 1,
+      "lex_max": "1001"
+    },
+    {
+      "depth_q": 4,
+      "regime": "balanced",
+      "total_transcripts": 16,
+      "certified_count": 8,
+      "prefix_probes": 4,
+      "tester_acc_size": 1,
+      "lex_max": "1111"
+    },
+    {
+      "depth_q": 4,
+      "regime": "dense",
+      "total_transcripts": 16,
+      "certified_count": 11,
+      "prefix_probes": 4,
+      "tester_acc_size": 1,
+      "lex_max": "1111"
+    },
+    {
+      "depth_q": 5,
+      "regime": "sparse",
+      "total_transcripts": 32,
+      "certified_count": 4,
+      "prefix_probes": 5,
+      "tester_acc_size": 1,
+      "lex_max": "10010"
+    },
+    {
+      "depth_q": 5,
+      "regime": "balanced",
+      "total_transcripts": 32,
+      "certified_count": 13,
+      "prefix_probes": 5,
+      "tester_acc_size": 1,
+      "lex_max": "11111"
+    },
+    {
+      "depth_q": 5,
+      "regime": "dense",
+      "total_transcripts": 32,
+      "certified_count": 20,
+      "prefix_probes": 5,
+      "tester_acc_size": 1,
+      "lex_max": "11111"
+    },
+    {
+      "depth_q": 6,
+      "regime": "sparse",
+      "total_transcripts": 64,
+      "certified_count": 4,
+      "prefix_probes": 6,
+      "tester_acc_size": 1,
+      "lex_max": "100100"
+    },
+    {
+      "depth_q": 6,
+      "regime": "balanced",
+      "total_transcripts": 64,
+      "certified_count": 21,
+      "prefix_probes": 6,
+      "tester_acc_size": 1,
+      "lex_max": "111111"
+    },
+    {
+      "depth_q": 6,
+      "regime": "dense",
+      "total_transcripts": 64,
+      "certified_count": 33,
+      "prefix_probes": 6,
+      "tester_acc_size": 1,
+      "lex_max": "111111"
+    },
+    {
+      "depth_q": 7,
+      "regime": "sparse",
+      "total_transcripts": 128,
+      "certified_count": 5,
+      "prefix_probes": 7,
+      "tester_acc_size": 1,
+      "lex_max": "1001001"
+    },
+    {
+      "depth_q": 7,
+      "regime": "balanced",
+      "total_transcripts": 128,
+      "certified_count": 34,
+      "prefix_probes": 7,
+      "tester_acc_size": 1,
+      "lex_max": "1111111"
+    },
+    {
+      "depth_q": 7,
+      "regime": "dense",
+      "total_transcripts": 128,
+      "certified_count": 59,
+      "prefix_probes": 7,
+      "tester_acc_size": 1,
+      "lex_max": "1111111"
+    },
+    {
+      "depth_q": 8,
+      "regime": "sparse",
+      "total_transcripts": 256,
+      "certified_count": 7,
+      "prefix_probes": 8,
+      "tester_acc_size": 1,
+      "lex_max": "10010010"
+    },
+    {
+      "depth_q": 8,
+      "regime": "balanced",
+      "total_transcripts": 256,
+      "certified_count": 55,
+      "prefix_probes": 8,
+      "tester_acc_size": 1,
+      "lex_max": "11111111"
+    },
+    {
+      "depth_q": 8,
+      "regime": "dense",
+      "total_transcripts": 256,
+      "certified_count": 104,
+      "prefix_probes": 8,
+      "tester_acc_size": 1,
+      "lex_max": "11111111"
+    }
+  ]
+}

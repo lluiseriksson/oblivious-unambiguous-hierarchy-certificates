@@ -1,0 +1,68 @@
+{
+  "schema": "OUH-CERT-1.0",
+  "mode": "single_loose_query_and_soup_exact",
+  "name": "mode4_loose_soup_n2_p2_out3",
+  "input_len_n": 2,
+  "witness_len_p": 2,
+  "pi_yes": [
+    "py_0",
+    "py_1"
+  ],
+  "pi_no": [
+    "pn_0",
+    "pn_1"
+  ],
+  "pi_out": [
+    "pout_0",
+    "pout_1",
+    "pout_2"
+  ],
+  "query_of": {
+    "00|00": "pout_0",
+    "00|01": "pout_1",
+    "00|10": "pn_0",
+    "00|11": "pout_0",
+    "01|00": "pout_1",
+    "01|01": "pout_2",
+    "01|10": "py_1",
+    "01|11": "pout_1",
+    "10|00": "pout_2",
+    "10|01": "pout_0",
+    "10|10": "pn_0",
+    "10|11": "pout_2",
+    "11|00": "pout_0",
+    "11|01": "pout_1",
+    "11|10": "py_1",
+    "11|11": "pout_0"
+  },
+  "v0_acc": [],
+  "v1_acc": [
+    "00|10",
+    "01|10",
+    "10|10",
+    "11|10"
+  ],
+  "claimed_sensitive_count": 4,
+  "claimed_loose_lang_size": 2,
+  "soup_Y_table": {
+    "00": [],
+    "01": [
+      "01"
+    ],
+    "10": [],
+    "11": [
+      "01"
+    ]
+  },
+  "soup_Z_table": {
+    "00": [
+      "11"
+    ],
+    "01": [],
+    "10": [
+      "11"
+    ],
+    "11": []
+  },
+  "claimed_soup_shared_witness": "0|11"
+}

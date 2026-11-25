@@ -1,0 +1,52 @@
+{
+  "rows": [
+    {
+      "num_out": 1,
+      "extensions_checked": 2,
+      "total_pairs": 32,
+      "sensitive_pairs": 8,
+      "insensitive_eliminated": 24,
+      "verify_ms": 0.128
+    },
+    {
+      "num_out": 2,
+      "extensions_checked": 4,
+      "total_pairs": 32,
+      "sensitive_pairs": 8,
+      "insensitive_eliminated": 24,
+      "verify_ms": 0.141
+    },
+    {
+      "num_out": 3,
+      "extensions_checked": 8,
+      "total_pairs": 32,
+      "sensitive_pairs": 8,
+      "insensitive_eliminated": 24,
+      "verify_ms": 0.189
+    },
+    {
+      "num_out": 4,
+      "extensions_checked": 16,
+      "total_pairs": 32,
+      "sensitive_pairs": 8,
+      "insensitive_eliminated": 24,
+      "verify_ms": 0.221
+    },
+    {
+      "num_out": 5,
+      "extensions_checked": 32,
+      "total_pairs": 32,
+      "sensitive_pairs": 8,
+      "insensitive_eliminated": 24,
+      "verify_ms": 0.368
+    },
+    {
+      "num_out": 6,
+      "extensions_checked": 64,
+      "total_pairs": 32,
+      "sensitive_pairs": 8,
+      "insensitive_eliminated": 24,
+      "verify_ms": 0.653
+    }
+  ]
+}

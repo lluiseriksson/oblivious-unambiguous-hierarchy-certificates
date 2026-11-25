@@ -1,0 +1,70 @@
+{
+  "rows": [
+    {
+      "n": 2,
+      "p": 1,
+      "r": 1,
+      "num_inputs": 4,
+      "outer_witnesses": 2,
+      "inner_witnesses": 2,
+      "product_witness_space": 4,
+      "pinned_inner_count": 1,
+      "collapsed_accept_per_pos_x": 1
+    },
+    {
+      "n": 2,
+      "p": 1,
+      "r": 2,
+      "num_inputs": 4,
+      "outer_witnesses": 2,
+      "inner_witnesses": 4,
+      "product_witness_space": 8,
+      "pinned_inner_count": 1,
+      "collapsed_accept_per_pos_x": 1
+    },
+    {
+      "n": 2,
+      "p": 2,
+      "r": 2,
+      "num_inputs": 4,
+      "outer_witnesses": 4,
+      "inner_witnesses": 4,
+      "product_witness_space": 16,
+      "pinned_inner_count": 1,
+      "collapsed_accept_per_pos_x": 1
+    },
+    {
+      "n": 3,
+      "p": 2,
+      "r": 2,
+      "num_inputs": 8,
+      "outer_witnesses": 4,
+      "inner_witnesses": 4,
+      "product_witness_space": 16,
+      "pinned_inner_count": 1,
+      "collapsed_accept_per_pos_x": 1
+    },
+    {
+      "n": 3,
+      "p": 2,
+      "r": 3,
+      "num_inputs": 8,
+      "outer_witnesses": 4,
+      "inner_witnesses": 8,
+      "product_witness_space": 32,
+      "pinned_inner_count": 1,
+      "collapsed_accept_per_pos_x": 1
+    },
+    {
+      "n": 4,
+      "p": 2,
+      "r": 3,
+      "num_inputs": 16,
+      "outer_witnesses": 4,
+      "inner_witnesses": 8,
+      "product_witness_space": 32,
+      "pinned_inner_count": 1,
+      "collapsed_accept_per_pos_x": 1
+    }
+  ]
+}

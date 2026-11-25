@@ -1,0 +1,33 @@
+{
+  "schema": "OUH-CERT-1.0",
+  "mode": "dot_operator_collapse_exact",
+  "name": "mode3_dot_collapse_n2_p1_r2",
+  "input_len_n": 2,
+  "outer_witness_len_p": 1,
+  "inner_witness_len_r": 2,
+  "inner_acc_table": {
+    "00|0": [
+      "10"
+    ],
+    "00|1": [],
+    "01|0": [
+      "10"
+    ],
+    "01|1": [
+      "10"
+    ],
+    "10|0": [
+      "10"
+    ],
+    "10|1": [
+      "10"
+    ],
+    "11|0": [
+      "10"
+    ],
+    "11|1": []
+  },
+  "claimed_outer_wn": "1",
+  "claimed_inner_vN": "10",
+  "claimed_lang_size": 2
+}

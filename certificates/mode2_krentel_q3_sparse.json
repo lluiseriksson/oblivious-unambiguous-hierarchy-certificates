@@ -1,0 +1,29 @@
+{
+  "schema": "OUH-CERT-1.0",
+  "mode": "krentel_lex_max_ogtd_cert",
+  "name": "mode2_krentel_q3_sparse",
+  "depth_q": 3,
+  "query_map": {
+    "": "q_0_root",
+    "0": "q_1_0",
+    "1": "q_1_1",
+    "00": "q_2_00",
+    "01": "q_2_01",
+    "10": "q_2_10",
+    "11": "q_2_11"
+  },
+  "oracle_yes_queries": [
+    "q_0_root",
+    "q_1_1",
+    "q_2_00",
+    "q_2_11"
+  ],
+  "claimed_lex_max_transcript": "111",
+  "claimed_certified_count": 5,
+  "claimed_prefix_probes": [
+    "100",
+    "110",
+    "111"
+  ],
+  "claimed_tester_unique_acc": "111"
+}

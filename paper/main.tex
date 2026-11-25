@@ -1,0 +1,185 @@
+\documentclass[11pt,twocolumn]{article}
+\usepackage[margin=0.72in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  citecolor=green!45!black,
+  urlcolor=blue!65!black
+}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\OUH}{\mathrm{OUH}}
+\newcommand{\OUP}{\mathrm{OUP}}
+\newcommand{\ONP}{\mathrm{ONP}}
+\newcommand{\SOUP}{\mathrm{SOUP}}
+\newcommand{\OGTD}{\mathrm{OGTD}}
+\newcommand{\OUGTD}{\mathrm{OUGTD}}
+
+\title{\textbf{Machine-Checked Exact Combinatorial Certificates for Input-Oblivious Unambiguous Hierarchies, Krentel Lex-Max OGTD Collapse, and Single-Query Promise Elimination}}
+\author{Lluis Eriksson\thanks{Independent researcher; manuscript prepared with transparent AI assistance via Google Antigravity. Source code, Lean~4 proofs, and exact certificates: \url{https://github.com/lluiseriksson/oblivious-unambiguous-hierarchy-certificates}.}}
+\date{November 25, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Edward A.~Hirsch (\texttt{arXiv:2611.33126}, November 24, 2026) established sharp structural collapses for input-oblivious unambiguous hierarchies built over $\OUP$, proving that the language-oracle hierarchy satisfies $\OUH \subseteq \mathrm{P}^{\mathrm{TALLY}\cap\mathrm{NP}} \subseteq \mathrm{P}_{\|}^{\ONP}$ (Theorem~4.1, Corollary~4.2), that the loose promise-oracle hierarchy collapses into $\OUH^\bullet \subseteq \OGTD[\mathrm{NP}] = \OUGTD[\mathrm{FP}^{\ONP},\mathrm{co}\text{-}\ONP,\mathrm{P}] \subseteq \mathrm{OUM}$ via Krentel lexicographically-largest transcripts (Lemma~3.1, Theorem~5.1), that the oblivious unambiguous dot-operator hierarchy collapses completely to $\exists^{\mathrm{ou}}\!\cdot\mathrm{co}\text{-}\OUP = \OUP \cup \mathrm{co}\text{-}\OUP$ (Theorem~6.2, Corollary~6.3), that a single loose $\mathrm{prOUP}$ query reduces to a standard $\OUP$ query ($\OUP^{\mathrm{prOUP}[1]} = \OUP^{\OUP[1]}$, Lemma~6.4, Theorem~6.5), and that $\SOUP = \OUP \cap \mathrm{co}\text{-}\OUP$ (Proposition~6.6). We present a machine-checked, zero-floating-point formalization and finite combinatorial certificate auditor for the order-theoretic, pigeonhole, and oracle-consistency core of these results. First, an 18-theorem zero-dependency Lean~4 kernel (\texttt{ObliviousUnambiguousHierarchy.lean}, Lean~4.35.0; 0~\texttt{sorry}, 0~warnings, 0~\texttt{Classical.choice}, 11 zero-axiom theorems) formalizes Cantor pairing injectivity and upper bounds, inductive tally-census uniqueness, oblivious bit-by-bit witness extraction, Krentel lex-max transcript soundness, inductive $\ONP$ prefix-search bit recovery, $\mathrm{co}\text{-}\ONP$ unique testing, fixed-pair refutation and dot-operator collapse soundness, single-loose-query in-promise forcing, and $\SOUP$ shared-witness tagging. Second, \texttt{OUH-CERT-1.0} audits four exact finite modes across 16 canonical certificates ($0.038$--$0.789\,\mathrm{ms}$) and rejects 60/60 live adversarial forgeries.
+\end{abstract}
+
+\section{Introduction}
+Input-oblivious complexity classes~\cite{fortnow2009fixed,aaronson2014full} restrict nondeterministic witnesses to depend only on the input length~$n$ rather than the individual instance~$x \in \{0,1\}^n$. Combining obliviousness with unambiguity yields $\OUP$, where every positive instance of length~$n$ shares a single unique witness $w_n$. Building on the loose unambiguous hierarchy of Hirsch and Sokolov~\cite{hirsch2015unambiguous}, Hirsch~\cite{hirsch2026oblivious} proved that the resulting hierarchies $\OUH$ (language oracles) and $\OUH^\bullet$ (loose promise oracles) collapse dramatically:
+\begin{equation}
+\begin{aligned}
+  \OUH &\subseteq \mathrm{P}^{\mathrm{TALLY}\cap\mathrm{NP}} \subseteq \mathrm{P}_{\|}^{\ONP}, \\
+  \OUH^\bullet &\subseteq \OGTD[\mathrm{NP}] \\
+  &= \OUGTD[\mathrm{FP}^{\ONP},\mathrm{co}\text{-}\ONP,\mathrm{P}],
+\end{aligned}
+  \label{eq:collapses}
+\end{equation}
+while at the base levels $\exists^{\mathrm{ou}}\!\cdot\mathrm{co}\text{-}\OUP = \OUP \cup \mathrm{co}\text{-}\OUP$, $\OUP^{\mathrm{prOUP}[1]} = \OUP^{\OUP[1]}$, and $\SOUP = \OUP \cap \mathrm{co}\text{-}\OUP$.
+
+Remarkably, every core mechanism behind~\cite{hirsch2026oblivious}—tally-census uniqueness (Lemma~2.8), Krentel's lexicographically-largest certified oracle transcript~\cite{krentel1988complexity} (Lemma~3.1), fixed-pair refutation on $(0^n, 0^p)$ vs.\ $(0^n, 1^p)$ (Theorem~6.2), sensitive-pair in-promise forcing across all consistent oracle extensions (Lemma~6.4), and tagged shared-witness construction on~$0^n$ (Proposition~6.6)—is a purely finite, constructive, combinatorial theorem amenable to zero-axiom Lean~4 proof and exact truth-table certification.
+
+\paragraph{Contributions and Scope.}
+We formally verify and audit the finite combinatorial, order-theoretic, and oracle-consistency core of~\cite{hirsch2026oblivious}. We explicitly scope our Lean~4 formalization away from polynomial-time Turing-machine runtime bounds, asymptotic advice-length polynomials, and uniform circuit encodings:
+\begin{enumerate}[leftmargin=*,nosep]
+  \item \textbf{Zero-dependency Lean~4 kernel (\S\ref{sec:lean}):} 18 constructive theorems in \texttt{ObliviousUnambiguousHierarchy.lean} (Lean~4.35.0~\cite{demoura2021lean4}), 0~\texttt{sorry}, 0~warnings, 0~\texttt{Classical.choice}, and \textbf{11 zero-axiom theorems}.
+  \item \textbf{Pure-stdlib exact verifier (\S\ref{sec:certifier}):} \texttt{OUH-CERT-1.0}, auditing four exact combinatorial modes with zero floating-point arithmetic.
+  \item \textbf{Empirical atlas \& red-team audit (\S\ref{sec:results}):} 16 canonical certificates ($0.038$--$0.789\,\mathrm{ms}$), four exact combinatorial sweeps across adaptive depths $q=2..8$, tally bounds $h=4..12$, and up to $2^6 = 64$ consistent promise extensions, plus 60/60 rejected live adversarial forgeries.
+\end{enumerate}
+
+\section{Combinatorial Core of Hirsch's Collapses}\label{sec:prelim}
+Four exact finite invariants drive the collapses of~\cite{hirsch2026oblivious}:
+\begin{enumerate}[leftmargin=*,nosep]
+  \item \emph{Tally census \& bit extraction (Lemma~2.8, Theorem~4.1):} Knowing the checksum $c_m = |C_m|$, any certified subset $S \subseteq C_m$ of size $c_m$ equals $C_m$ uniquely. Given an $\OUP$ verifier~$V$, the $p$ parallel tally bits $W_i = [\exists x,w: V(x,w)=1 \land w_i=1]$ recover $w_n$ identically (or $0^p$ when $L \cap \{0,1\}^n = \emptyset$).
+  \item \emph{Krentel lex-max transcript (Lemma~3.1):} On a depth-$q$ adaptive NP-oracle query tree $G(1^n)$, let $R(a)$ hold iff every $1$-bit of transcript $a \in \{0,1\}^q$ queries a YES instance. At the first mismatch between any $a \in R$ and the true transcript~$a^\ast$, $a_j = 0 < 1 = a^\ast_j$, so $a^\ast$ is the unique lexicographical maximum of~$R$, recovered in $q$ $\ONP$ prefix probes and uniquely accepted by the $\mathrm{co}\text{-}\ONP$ tester
+  \begin{equation}
+    T(a) \iff R(a) \;\land\; \forall b >_{\mathrm{lex}} a,\; \neg R(b).
+    \label{eq:tester}
+  \end{equation}
+  \item \emph{Fixed-pair dot-operator collapse (Theorem~6.2):} Since at most one $w \in \{0,1\}^p$ ($p \ge 1$) satisfies $(0^n, w) \in R$, at least one of $(0^n, 0^p)$ and $(0^n, 1^p)$ lies in $\overline{R}$, pinning down the inner oblivious witness~$v_N$ via $V((0^n,0^p),v) \lor V((0^n,1^p),v) = 1$ and yielding a single collapsed $\OUP$ witness $(w_n, v_N)$.
+  \item \emph{Single loose query \& $\SOUP$ tagging (Lemma~6.4, Proposition~6.6):} For any sensitive pair $(x,w) \in T = \{(x,w): V^0(x,w) \neq V^1(x,w)\}$, loose consistency across all extensions~$O$ of $\Pi=(\Pi_{\mathrm{YES}},\Pi_{\mathrm{NO}})$ forces $q(x,w) \in \Pi_{\mathrm{YES}} \cup \Pi_{\mathrm{NO}}$. For $L \in \OUP \cap \mathrm{co}\text{-}\OUP$ with verifiers $Y, Z$, tagging $(b=1 \land Y(0^n,w)) \lor (b=0 \land Z(0^n,w))$ selects a unique shared $\SOUP$ witness $(b^\ast, w^\ast)$.
+\end{enumerate}
+
+\section{Zero-Dependency Lean 4 Kernel}\label{sec:lean}
+We formalize 18 constructive theorems in \texttt{lean/ObliviousUnambiguousHierarchy.lean} (Lean~4.35.0, zero external libraries), audited via \texttt{lean/AuditAxioms.lean} with 0~warnings, 0~\texttt{sorry}, 0~\texttt{Classical.choice}, and 0~\texttt{Lean.ofReduceBool} (Table~\ref{tab:lean}). Eleven of the 18 theorems depend on \emph{zero axioms} (\texttt{none}).
+
+\begin{proposition}[Constructive OUH Kernel]\label{prop:lean}
+\leavevmode
+\begin{enumerate}[leftmargin=*,nosep]
+  \item \emph{Tally census \& bit extraction (Theorems~1--5):} Exact injectivity of doubled Cantor pairing, inductive boolean-list census uniqueness, coordinate recovery, and non-empty/empty oblivious witness bit extraction.
+  \item \emph{Krentel lex-max \& $\OGTD$ (Theorems~6--9, 18):} Arbitrary-length lex-max certified transcript uniqueness, inductive prefix-search bit recovery over certified transcript extensions, $\mathrm{co}\text{-}\ONP$ unique tester acceptance, $\OGTD$ sandwich soundness, and the general Cantor pairing upper bound $\mathrm{cantor}_2(a,b) < k(k+1)$.
+  \item \emph{Dot collapse, loose queries, \& $\SOUP$ (Theorems~10--17):} Fixed-pair refutation, collapsed witness uniqueness and soundness, union distributivity, Lemma~6.4 in-promise forcing, insensitive-pair elimination, Proposition~6.6 shared tagged witness uniqueness, and $\SOUP^{\SOUP}=\SOUP$ composition.
+\end{enumerate}
+\end{proposition}
+
+\begin{table}[t]
+\centering
+\caption{Complete 18-theorem Lean~4.35.0 kernel in \texttt{ObliviousUnambiguousHierarchy.lean} (0~\texttt{sorry}, 0~warnings, 0~\texttt{Classical.choice}, 11 zero-axiom theorems).}
+\label{tab:lean}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}rll@{}}
+\toprule
+\# & Lean~4 Theorem Identifier & Axiom Footprint \\
+\midrule
+1 & \texttt{cantor\_pairing\_injective} & \texttt{[propext, Quot.sound]} \\
+2 & \texttt{tally\_census\_subset\_exact} & \texttt{[propext, Quot.sound]} \\
+3 & \texttt{tally\_census\_bit\_determined} & \texttt{[propext, Quot.sound]} \\
+4 & \texttt{oblivious\_witness\_bit\_extraction} & \texttt{none} \\
+5 & \texttt{oblivious\_empty\_slice\_zero\_witness} & \texttt{none} \\
+6 & \texttt{lex\_max\_transcript\_sound\_and\_unique} & \texttt{[propext]} \\
+7 & \texttt{prefix\_search\_bit\_recovery} & \texttt{[propext]} \\
+8 & \texttt{co\_onp\_tester\_unique\_acceptance} & \texttt{[propext, Quot.sound]} \\
+9 & \texttt{ogtd\_chain\_inclusion\_sound} & \texttt{none} \\
+10 & \texttt{dot\_op\_fixed\_pair\_refutation} & \texttt{none} \\
+11 & \texttt{dot\_op\_collapse\_unique\_witness} & \texttt{none} \\
+12 & \texttt{dot\_op\_collapse\_soundness} & \texttt{none} \\
+13 & \texttt{dot\_op\_union\_distributive} & \texttt{none} \\
+14 & \texttt{single\_loose\_query\_in\_promise} & \texttt{none} \\
+15 & \texttt{single\_loose\_query\_insensitive\_elim} & \texttt{none} \\
+16 & \texttt{soup\_shared\_witness\_tag\_exact} & \texttt{none} \\
+17 & \texttt{soup\_self\_low\_composition} & \texttt{none} \\
+18 & \texttt{krentel\_transcript\_space\_bounds} & \texttt{[propext, Quot.sound]} \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\section{Exact Combinatorial Verifier}\label{sec:certifier}
+\texttt{OUH-CERT-1.0} (\texttt{src/ouh\_certifier.py}) is a pure-stdlib, zero-float verifier enforcing strict JSON types (rejecting floats, booleans-as-ints, duplicates, invalid bitstrings, and vacuous witnesses) across four exact modes:
+\begin{enumerate}[leftmargin=*,nosep]
+  \item \textbf{Mode~1 (\texttt{tally\_census\_\allowbreak and\_oblivious\_\allowbreak extraction}):} Checks tally census $c_m=|C_m|$, Cantor pairing injectivity, strict $\OUP$ truth-table unambiguity, and bit-by-bit recovery of $w_n$ (or $0^p$ on empty slices).
+  \item \textbf{Mode~2 (\texttt{krentel\_lex\_max\_\allowbreak ogtd\_cert}):} Enumerates all $2^q$ transcripts on an adaptive NP-oracle query tree ($2 \le q \le 8$), certifies Krentel lex-max uniqueness, replays all $q$ $\ONP$ prefix probes, and verifies $|\mathrm{Acc}_T|=1$.
+  \item \textbf{Mode~3 (\texttt{dot\_operator\_\allowbreak collapse\_exact}):} Verifies $\overline{R} \in \OUP$ (witness~$v_N$), unique outer~$w_n$, fixed-pair pin-down on $(0^n,0^p)$ vs.\ $(0^n,1^p)$, and collapsed $\OUP$ acceptance of solely $(w_n,v_N)$.
+  \item \textbf{Mode~4 (\texttt{single\_loose\_query\_\allowbreak and\_soup\_exact}):} Exhaustively replays all $2^{|\Pi_{\mathrm{out}}|}$ oracle extensions consistent with $\Pi=(\Pi_{\mathrm{YES}},\Pi_{\mathrm{NO}})$, certifies $q(T) \subseteq \Pi_{\mathrm{YES}}\cup\Pi_{\mathrm{NO}}$, and verifies Proposition~6.6 shared $\SOUP$ witness uniqueness on~$0^n$.
+\end{enumerate}
+
+\section{Empirical Atlas and Red-Team Audit}\label{sec:results}
+Running \texttt{scripts/run\_all\_experiments.py} produces 16 canonical certificates (4 per mode) and four exact combinatorial sweeps, audited end-to-end by \texttt{scripts/verify\_all.py} with SHA-256 verification across all 41 tracked repository files.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{../figures/fig1_krentel_ogtd_and_tally_census.png}
+  \caption{(a) Exact Lemma~3.1 Krentel certified transcript count $|R|$ across depths $q=2\dots 8$ (sparse, balanced, dense regimes) versus $2^q$ total transcripts and $q$ $\ONP$ prefix probes. (b) Exact Lemma~2.8 tally-census collapse from $\binom{h}{c_m}$ same-size subsets to exactly~$1$ certified subset ($h=4\dots 12$).}
+  \label{fig:krentel}
+\end{figure}
+
+\paragraph{Krentel Transcripts and Tally Census (Fig.~\ref{fig:krentel}).}
+Across adaptive depths $q=2\dots 8$ ($2^q = 4\dots 256$), the Krentel certified set $|R|$ spans $7$ (sparse), $55$ (balanced), and $104$ (dense) transcripts at $q=8$, yet in 100\% of instances $\ONP$ binary prefix search recovers the exact true transcript in $q$ probes and the $\mathrm{co}\text{-}\ONP$ tester~\eqref{eq:tester} achieves $|\mathrm{Acc}_T|=1$. In Mode~1 ($0.038$--$0.084\,\mathrm{ms}$), exact bit-by-bit tally extraction recovers both non-empty witnesses (up to $n=4, p=6$, $|L|=11$) and the empty-slice zero witness $0^5$, while Lemma~2.8 census uniqueness collapses $\binom{12}{6} = 924$ same-size subsets (out of $2^{12}=4096$) to exactly~$1$.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{../figures/fig2_dot_collapse_and_loose_promise.png}
+  \caption{(a) Theorem~6.2 dot-operator collapse across $(n,p,r)$: fixed-pair refutation collapses $2^{p+r}$ candidate pairs to exactly~$1$ unique witness $(w_n,v_N)$. (b) Exhaustive Lemma~6.4 loose-oracle audit across $|\Pi_{\mathrm{out}}|=1\dots 6$ ($2\dots 64$ consistent extensions, $0.128$--$0.653\,\mathrm{ms}$).}
+  \label{fig:collapse}
+\end{figure}
+
+\paragraph{Dot Collapse, Loose Extensions, and $\SOUP$ (Fig.~\ref{fig:collapse}).}
+In Mode~3 ($0.068$--$0.183\,\mathrm{ms}$), fixed-pair refutation collapses up to $2^{2+3}=32$ witness pairs to the sole pair $(w_n,v_N)$ at $(n,p,r)=(4,2,3)$ ($|L|=9$). In Mode~4 ($0.117$--$0.789\,\mathrm{ms}$), exhaustive auditing across up to $2^5 = 32$ consistent promise extensions (and $2^6 = 64$ in Experiment~3, $0.653\,\mathrm{ms}$) confirms that all $24/32$ insensitive pairs querying $\Pi_{\mathrm{out}}$ are safely eliminated while every sensitive pair lies strictly inside $\Pi_{\mathrm{YES}}\cup\Pi_{\mathrm{NO}}$, and certifies Proposition~6.6 shared $\SOUP$ witnesses for both $0^n \in L$ (\texttt{1|wY}) and $0^n \notin L$ (\texttt{0|wZ}).
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{../figures/fig3_certificate_replay_atlas.png}
+  \caption{(a) Exact zero-float replay latency across all 16 canonical \texttt{OUH-CERT-1.0} certificates ($0.038$--$0.789\,\mathrm{ms}$). (b) Red-team adversarial audit rejecting 60/60 live forgery attacks across all modes.}
+  \label{fig:atlas}
+\end{figure}
+
+\paragraph{Replay Atlas and Red-Team Audit (Fig.~\ref{fig:atlas}, Table~\ref{tab:replay}).}
+All 16 canonical certificates replay in $0.038$--$0.789\,\mathrm{ms}$ with zero floats. Our adversarial suite (\texttt{tests/test\_suite.py}) tests 60 live forgery attacks—including float/bool type confusion, ambiguous or non-oblivious witnesses, tampered Krentel probes, vacuous empty languages, sensitive queries leaking outside the promise $\Pi_{\mathrm{YES}}\cup\Pi_{\mathrm{NO}}$, and non-complementary $\SOUP$ verifiers—achieving \textbf{60/60 rejections} with zero bypasses.
+
+\begin{table}[t]
+\centering
+\caption{Summary of all 16 canonical \texttt{OUH-CERT-1.0} certificates and 60/60 live adversarial red-team audit.}
+\label{tab:replay}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Verification Mode & Certs & Latency (ms) & Attacks Rejected \\
+\midrule
+Mode~1: Tally Census \& Extraction & 4 & $0.038$--$0.084$ & 12/12 \\
+Mode~2: Krentel Lex-Max \& $\OUGTD$ & 4 & $0.050$--$0.133$ & 12/12 \\
+Mode~3: Dot-Operator Collapse & 4 & $0.068$--$0.183$ & 12/12 \\
+Mode~4: Single Loose Query \& $\SOUP$ & 4 & $0.117$--$0.789$ & 14/14 \\
+Global Schema / Type / Bitstring & -- & -- & 10/10 \\
+\midrule
+\textbf{Total} & \textbf{16} & \textbf{0.038--0.789} & \textbf{60/60} \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+\section{Conclusion}
+We delivered an 18-theorem zero-dependency Lean~4 kernel (11 zero-axiom theorems, 0~\texttt{Classical.choice}) and the exact combinatorial verifier \texttt{OUH-CERT-1.0} for the finite core of Hirsch's input-oblivious unambiguous hierarchy collapses~\cite{hirsch2026oblivious}. Mechanizing uniform polynomial-time oracle Turing machines in Lean~4 to bridge these finite combinatorial lemmas to asymptotic complexity-class inclusions remains an open direction for formalized complexity theory.
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}

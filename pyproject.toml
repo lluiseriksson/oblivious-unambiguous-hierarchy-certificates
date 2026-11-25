@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oblivious-unambiguous-hierarchy-certificates"
+version = "1.0.0"
+description = "Machine-Checked Exact Certificates for Input-Oblivious Unambiguous Hierarchies (Hirsch, arXiv:2611.33126)"
+authors = [{ name = "Lluis Eriksson" }]
+license = { text = "MIT" }
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
