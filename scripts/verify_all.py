@@ -71,7 +71,7 @@ def main() -> None:
     print("[1/4] Auditing Lean 4.35.0 kernel...")
     subprocess.run(["lake", "build"], cwd=ROOT / "lean", check=True)
     audit = subprocess.run(
-        ["lake", "env", "lean", "AuditAxioms.lean"],
+        ["lake", "env", "lean", "-j", "1", "AuditAxioms.lean"],
         cwd=ROOT / "lean",
         check=True,
         capture_output=True,
